@@ -23,51 +23,83 @@ var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
 // 6. or if player needs to "keeps playing"
 
 // 7. somehow add all these results and such to the html
+
+// 8. Need to add if player presses anything other than a letter
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-//game selects a random letter from the letters array
-var gameChoice = letters[Math.floor(Math.random()*letter.length)];
-	console.log(gameChoice);
-
-//user guess is a "string" which is just a letter. each letter is assinged a keycode.
-var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-	console.log(userGuess);
-	//Could this be var userGuess = event.key????
 
 //GAMETIME!!////////////////
 //when key is let up perform the function
 document.onkeyup = function(event) {
-	var userGuess;
-	var gameChoice;
+	//game selects a random letter from the letters array
+	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	console.log(userGuess);
+
+	//user guess is a "string" which is just a letter. each letter is assinged a keycode.
+	var gameChoice = letters[Math.floor(Math.random()*letters.length)];
+	console.log(gameChoice);
+
 	guessesSoFar.push(userGuess);
 
+	
+
 	//if player's guess in the game choice (win)
-	if (userGuess === gameChoice) {
+	if (userGuess == gameChoice) {
 		wins++; //adds one to the wins score
 		guessLeft = 9; //resets guesses left to 9
 		guessesSoFar.length = 0; //resets guesses so far to none
 	}
 	//if player has no guesses left (lose)
-	else if (guessLeft === 0) {
+	else if (guessLeft == 0) {
 		losses++; //adds one to the losses score
 		guessLeft = 9; //resets guess left to 9
 		guessesSoFar.length = 0; //resets guesses so far to none
 	}
 	//if player guess is not equal to the gameChoice 
-	else (userGuess !== gameChoice) {
+	else if (userGuess !== gameChoice) {
 		guessLeft--; //then decrease guesses left by one
+
 	}
+
 	//still need to show all this on html page
-	document.querySelector("all").innerHTML = "<h1>Mia's Psychic Game</h1>" + "<p>Guess what letter I'm thinking of</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Guesses Left: " + guessLeft + "</p>" + "<p>Your Guesses So Far: " + guessesSoFar + "</p>";
+	document.getElementById("wins").innerHTML = "Wins: " + wins;
+	document.getElementById("losses").innerHTML = "Losses: " + losses;
+	document.getElementById("guessLeft").innerHTML = "Guesses Left: " + guessLeft;
+	document.getElementById("guessesSoFar").innerHTML = "Guesses So Far: " + guessesSoFar;
 }
 
+//need to make sure that if same letter clicked it does not decrease the guesses left or add the the guessesSoFar
+//OR!!!! maybe if not a letter do not run any of the game code!
 
 
+//try1
+if (event.keyCode <= 48 ) {
 
+	}
+//try2
+if(String.fromCharCode(event.keyCode).match(/(\w|\s)/g)) 
 
+//try3
+if (guessesSoFar.indexOf(userGuess) < 0 && letters.indexOf(userGuess) >= 0) {
+		guessesSoFar[guessesSoFar.length]=userGuess;
+	}
 
+//try4
+if (userGuess === letters[i]) {
+	//run code
+}
+
+//try5
+if (event.keyCode >= 65 && event.keyCode <= 90) {
+	//run code
+}	
+
+//try6
+if(userGuess.match(/[a-zA-Z]/) {
+	//run code
+}
 
 
 
